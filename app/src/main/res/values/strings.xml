@@ -3,4 +3,5 @@
     <string name="find_path_text">Find Path</string>
     <string name="path_label_text">Path:</string>
     <string name="instructions">Please enter 1 or more rows of space-separated numeric values.</string>
+    <string name="create_valid_map_error_text">There was an error finding the path.  Please insure a valid map was created. Valid maps have between 1 and 10 rows and between 5 and 100 columns.</string>
 </resources>

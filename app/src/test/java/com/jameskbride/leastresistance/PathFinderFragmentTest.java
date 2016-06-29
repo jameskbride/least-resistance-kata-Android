@@ -36,7 +36,7 @@ public class PathFinderFragmentTest {
     }
 
     @Test
-    public void givenAValidPathHasBeenEnteredWhenAPathIsSearchedForThenItIsDisplayed() {
+    public void givenAValidMapHasBeenEnteredWhenAPathIsSearchedForThenItIsDisplayed() {
         EditText editText = (EditText)pathFinderFragment.getView().findViewById(R.id.map_text);
         editText.setText("1 2 3 4 5");
 
@@ -45,5 +45,17 @@ public class PathFinderFragmentTest {
         TextView pathText = (TextView)pathFinderFragment.getView().findViewById(R.id.path_text);
 
         assertThat(pathText.getText().toString(), equalTo("Yes\n15\n1 1 1 1 1"));
+    }
+
+    @Test
+    public void givenAnInvalidMapHasBeenEnteredWhenAPathIsSearchedForThenAToastIsDisplayedToPromptForAValidToast() {
+        EditText editText = (EditText)pathFinderFragment.getView().findViewById(R.id.map_text);
+        editText.setText("1 2 3 4");
+
+        pathFinderFragment.getView().findViewById(R.id.find_path_button).performClick();
+
+        TextView pathText = (TextView)pathFinderFragment.getView().findViewById(R.id.path_text);
+
+        assertThat(pathText.getText().toString(), equalTo(pathFinderFragment.getString(R.string.create_valid_map_error_text)));
     }
 }

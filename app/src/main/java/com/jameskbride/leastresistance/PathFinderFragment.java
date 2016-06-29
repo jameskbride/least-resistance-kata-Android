@@ -54,12 +54,16 @@ public class PathFinderFragment extends Fragment {
 
     @OnClick(R.id.find_path_button)
     public void findPath() {
-        int[][] map = extractMap();
-        PathFinder pathFinder = new PathFinder();
+        try {
+            int[][] map = extractMap();
+            PathFinder pathFinder = new PathFinder();
 
-        PathResult pathResult = pathFinder.findPath(map);
+            PathResult pathResult = pathFinder.findPath(map);
 
-        pathText.setText(pathResult.toString());
+            pathText.setText(pathResult.toString());
+        } catch (Exception e) {
+            pathText.setText(R.string.create_valid_map_error_text);
+        }
     }
 
     private int[][] extractMap() {
