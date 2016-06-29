@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Least Resistance</string>
+    <string name="find_path_text">Find Path</string>
+    <string name="path_label_text">Path:</string>
 </resources>
