@@ -36,12 +36,40 @@ public class LeastResistanceActivityInstrumentationTest {
     @Test
     public void givenAMapWithAComplexValidPathWhenThePathIsCalculatedThenItShouldReturnThePath() {
         onView(withId(R.id.map_text)).perform(typeText(
-                "1 2 3 4 5" + "\n" +
-                "2 1 1 5 7" + "\n" +
-                "51 50 50 50 50"), closeSoftKeyboard());
+                "3 4 1 2 8 6" + "\n" +
+                "6 1 8 2 7 4" + "\n" +
+                "5 9 3 9 9 5" + "\n" +
+                "8 4 1 3 2 6" + "\n" +
+                "3 7 2 8 6 4"), closeSoftKeyboard());
 
         onView(withId(R.id.find_path_button)).perform(click());
 
-        onView(withText("Yes\n12\n1 2 2 1 1")).check(matches(isDisplayed()));
+        onView(withText("Yes\n16\n1 2 3 4 4 5")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void givenAMapWithAValidPathWhichOverflowsWhenThePathIsCalculatedThenItShouldReturnThePath() {
+        onView(withId(R.id.map_text)).perform(typeText(
+                "3 4 1 2 8 6" + "\n" +
+                "6 1 8 2 7 4" + "\n" +
+                "5 9 3 9 9 5" + "\n" +
+                "8 4 1 3 2 6" + "\n" +
+                "3 7 2 1 2 3"), closeSoftKeyboard());
+
+        onView(withId(R.id.find_path_button)).perform(click());
+
+        onView(withText("Yes\n11\n1 2 1 5 5 5")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void givenAMapWithNoValidPathWhenThePathIsCalculatedThenItShouldNotReturnThePath() {
+        onView(withId(R.id.map_text)).perform(typeText(
+                "19 10 19 10 19" + "\n" +
+                "21 23 20 19 12" + "\n" +
+                "20 12 20 11 10"), closeSoftKeyboard());
+
+        onView(withId(R.id.find_path_button)).perform(click());
+
+        onView(withText("No\n48\n1 1 1")).check(matches(isDisplayed()));
     }
 }
