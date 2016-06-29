@@ -9,6 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.jameskbride.leastresistance.LeastResistanceActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/instructions"/>
 
     <EditText
         android:layout_width="match_parent"
