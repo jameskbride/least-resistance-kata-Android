@@ -3,7 +3,6 @@ package com.jameskbride.leastresistance;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,6 @@ import android.widget.TextView;
 import com.jameskbride.leastResistance.PathFinder;
 import com.jameskbride.leastResistance.PathResult;
 
-import java.util.Arrays;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,6 +20,8 @@ import butterknife.Unbinder;
 
 public class PathFinderFragment extends Fragment {
 
+    public static final String ROW_SPLITTER_REGEX = "\n";
+    public static final String COLUMN_SPLITTER_REGEX = " ";
     @BindView(R.id.map_text)
     EditText mapText;
 
@@ -56,13 +54,21 @@ public class PathFinderFragment extends Fragment {
 
     @OnClick(R.id.find_path_button)
     public void findPath() {
-        Log.d(PathFinderFragment.class.getSimpleName(), "In the on click");
-        String[] mapRows = mapText.getText().toString().split("\n");
+        int[][] map = extractMap();
+        PathFinder pathFinder = new PathFinder();
+
+        PathResult pathResult = pathFinder.findPath(map);
+
+        pathText.setText(pathResult.toString());
+    }
+
+    private int[][] extractMap() {
+        String[] mapRows = mapText.getText().toString().split(ROW_SPLITTER_REGEX);
         int columnCount = mapRows[0].split(" ").length;
 
         int[][] map = new int[mapRows.length][columnCount];
         for (int rowIndex = 0; rowIndex < mapRows.length; rowIndex++) {
-            String[] columns = mapRows[rowIndex].split(" ");
+            String[] columns = mapRows[rowIndex].split(COLUMN_SPLITTER_REGEX);
             int[] columnIntValues = new int[columnCount];
             for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
                 columnIntValues[columnIndex] = Integer.parseInt(columns[columnIndex]);
@@ -70,10 +76,6 @@ public class PathFinderFragment extends Fragment {
 
             map[rowIndex] = columnIntValues;
         }
-        PathFinder pathFinder = new PathFinder();
-
-        PathResult pathResult = pathFinder.findPath(map);
-
-        pathText.setText(pathResult.toString());
+        return map;
     }
 }
