@@ -32,4 +32,16 @@ public class LeastResistanceActivityInstrumentationTest {
 
         onView(withText("Yes\n15\n1 1 1 1 1")).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void givenAMapWithAComplexValidPathWhenThePathIsCalculatedThenItShouldReturnThePath() {
+        onView(withId(R.id.map_text)).perform(typeText(
+                "1 2 3 4 5" + "\n" +
+                "2 1 1 5 7" + "\n" +
+                "51 50 50 50 50"), closeSoftKeyboard());
+
+        onView(withId(R.id.find_path_button)).perform(click());
+
+        onView(withText("Yes\n12\n1 2 2 1 1")).check(matches(isDisplayed()));
+    }
 }
